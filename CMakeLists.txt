@@ -24,6 +24,9 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/external/catch)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/source/modules/client)
 
+add_subdirectory(${PROJECT_SOURCE_DIR}/source/modules/scene)
+add_subdirectory(${PROJECT_SOURCE_DIR}/source/tests/scenetests)
+
 add_subdirectory(${PROJECT_SOURCE_DIR}/source/modules/game)
 add_subdirectory(${PROJECT_SOURCE_DIR}/source/tests/gametests)
 

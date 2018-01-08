@@ -23,20 +23,37 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace scene
 {
-    template <typename ComponentType, typename... Args>
-    ComponentType& Entity::add_component(Args&&... args)
+    template <typename EntityType, typename... Args>
+    std::shared_ptr<EntityType> Scene::create_entity(Args&&... args)
     {
-        return _scene.get_components<ComponentType>().add_component_to_entity(*this, ComponentType(args...));
+        auto entity = std::make_shared<EntityType>(*this, args...);
+        _entities.emplace_back(entity);
+        return entity;
     }
 
     template <typename ComponentType>
-    ComponentType& Entity::get_component()
+    ComponentPool<ComponentType>& Scene::get_components()
     {
-        ComponentType* found_component = _scene.get_components<ComponentType>().find_component_for_entity(*this);
-        if (!found_component)
+        auto it = _component_pools.find(typeid(ComponentType));
+        if (it == _component_pools.end())
         {
-            throw std::runtime_error("Entity does not have component of the specified type");
+            std::shared_ptr<ComponentPoolBase> component_pool(new ComponentPool<ComponentType>());
+            _component_pools[typeid(ComponentType)] = std::move(component_pool);
+            it = _component_pools.find(typeid(ComponentType));
         }
-        return *found_component;
+        return *reinterpret_cast<ComponentPool<ComponentType>*>(it->second.get());
+    }
+
+    template <typename ComponentType>
+    const ComponentPool<ComponentType>& Scene::get_components() const
+    {
+        auto it = _component_pools.find(typeid(ComponentType));
+        if (it == _component_pools.end())
+        {
+            std::unique_ptr<ComponentBase> component_pool(new ComponentPool<ComponentType>());
+            auto result = _component_pools.emplace(typeid(ComponentType), std::move(component_pool));
+            it = result.first;
+        }
+        return *reinterpret_cast<ComponentPool<ComponentType>*>(it->second.get());
     }
 }

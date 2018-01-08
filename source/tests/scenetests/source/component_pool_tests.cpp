@@ -21,42 +21,4 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
-#include <scene/entity.hpp>
-#include <scene/component_pool.hpp>
-
 #include <catch.hpp>
-
-class TestComponent :
-    public scene::Component<TestComponent>
-{
-public:
-    TestComponent(scene::Entity& entity, int value) :
-        scene::Component<TestComponent>(entity),
-        _value(value)
-    {
-    }
-
-    int get_value()
-    {
-        return _value;
-    }
-
-private:
-    int _value;
-};
-
-TEST_CASE("Add a component to a component pool")
-{
-    scene::Entity entity;
-    scene::ComponentPool<TestComponent> component_pool;
-    TestComponent& test_component = component_pool.add(TestComponent(entity, 23));
-    REQUIRE(test_component.get_value() == 23);
-}
-
-TEST_CASE("Remove a component to a component pool")
-{
-    scene::Entity entity;
-    scene::ComponentPool<TestComponent> component_pool;
-    TestComponent& test_component = component_pool.add(TestComponent(entity, 23));
-    REQUIRE(test_component.get_value() == 23);
-}

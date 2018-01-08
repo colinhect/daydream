@@ -22,37 +22,20 @@
 // IN THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
+#include <cassert>
+
 #include "export.h"
 
 namespace scene
 {
-    class Entity;
-
     class SCENE_EXPORT ComponentBase
     {
     public:
-        ComponentBase(Entity& entity) :
-            _entity(entity)
-        {
-        }
-
+        ComponentBase() = default;
         ComponentBase(ComponentBase&&) = default;
         ComponentBase& operator=(ComponentBase&&) = default;
         ComponentBase(const ComponentBase&) = delete;
         ComponentBase& operator=(const ComponentBase&) = delete;
-
-        Entity& entity()
-        {
-            return _entity;
-        }
-
-        const Entity& entity() const
-        {
-            return _entity;
-        }
-
-    private:
-        Entity& _entity;
     };
 
     template <typename ComponentType>
@@ -60,7 +43,6 @@ namespace scene
         public ComponentBase
     {
     public:
-        Component(Entity& entity);
     };
 }
 

@@ -1,15 +1,16 @@
 project(scene CXX)
 
 set(SOURCE_FILES
-    include/scene/scene.hpp
-    source/scene.cpp
-    include/scene/entity.hpp
-    include/scene/entity.inl
-    source/entity.cpp
     include/scene/component.hpp
     include/scene/component.inl
     include/scene/component_pool.hpp
     include/scene/component_pool.inl
+    include/scene/entity.hpp
+    include/scene/entity.inl
+    source/entity.cpp
+    include/scene/scene.hpp
+    include/scene/scene.inl
+    source/scene.cpp
     )
 
 add_library(scene SHARED ${SOURCE_FILES})

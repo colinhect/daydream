@@ -29,6 +29,8 @@
 
 namespace scene
 {
+    class Scene;
+
     class SCENE_EXPORT Entity
     {
     public:
@@ -41,13 +43,10 @@ namespace scene
         Entity& operator=(const Entity&) = delete;
 
         template <typename ComponentType, typename... Args>
-        ComponentType& add_component(Args&&.. args);
+        ComponentType& add_component(Args&&... args);
 
         template <typename ComponentType>
-        ComponentType& component();
-
-        template <typename ComponentType>
-        const ComponentType& component() const;
+        ComponentType& get_component();
 
     private:
         Scene& _scene;

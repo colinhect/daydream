@@ -31,24 +31,32 @@ namespace scene
 {
     class Entity;
 
-    template <typename ComponentType>
-    class ComponentPool
+    class SCENE_EXPORT ComponentPoolBase
     {
     public:
-        ComponentPool() = default;
+        virtual ~ComponentPoolBase() { }
+    };
+
+    template <typename ComponentType>
+    class ComponentPool :
+        public ComponentPoolBase
+    {
+    public:
+        ComponentPool();
+
         ComponentPool(ComponentPool&&) = default;
         ComponentPool& operator=(ComponentPool&&) = default;
         ComponentPool(const ComponentPool&) = delete;
         ComponentPool& operator=(const ComponentPool&) = delete;
 
-        ComponentType& add(ComponentType&& component);
+        ComponentType& add_component_to_entity(const Entity& entity, ComponentType&& component);
 
-        ComponentType* find_for_entity(const Entity& entity);
-        const ComponentType* find_for_entity(const Entity& entity) const;
+        ComponentType* find_component_for_entity(const Entity& entity);
+        const ComponentType* find_component_for_entity(const Entity& entity) const;
 
     private:
         std::deque<ComponentType> _components;
-        std::unordered_map<const Entity*, ComponentType*> _entityToComponent;
+        std::unordered_map<const Entity*, ComponentType*> _entity_to_component;
     };
 }
 

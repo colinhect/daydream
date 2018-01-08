@@ -23,9 +23,4 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace scene
 {
-    template <typename ComponentType>
-    Component<ComponentType>::Component(Entity& entity) :
-        ComponentBase(entity)
-    {
-    }
 }

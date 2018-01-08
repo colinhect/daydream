@@ -22,8 +22,14 @@
 // IN THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
+#include <map>
+#include <memory>
+#include <vector>
+#include <typeindex>
+#include <typeinfo>
 #include "export.h"
 
+#include "entity.hpp"
 #include "component_pool.hpp"
 
 namespace scene
@@ -31,12 +37,20 @@ namespace scene
     class SCENE_EXPORT Scene
     {
     public:
-        template <typename ComponentType>
-        ComponentPool<ComponentType>& components();
+        template <typename EntityType, typename... Args>
+        std::shared_ptr<EntityType> create_entity(Args&&... args);
 
         template <typename ComponentType>
-        const ComponentPool<ComponentType>& components() const;
+        ComponentPool<ComponentType>& get_components();
+
+        template <typename ComponentType>
+        const ComponentPool<ComponentType>& get_components() const;
+
+    private:
+        std::vector<std::shared_ptr<Entity>> _entities;
+        mutable std::map<std::type_index, std::shared_ptr<ComponentPoolBase>> _component_pools;
     };
 }
 
 #include "entity.inl"
+#include "scene.inl"

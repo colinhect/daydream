@@ -24,19 +24,39 @@
 namespace scene
 {
     template <typename ComponentType>
-    ComponentType& ComponentPool<ComponentType>::add(ComponentType&& component)
+    ComponentPool<ComponentType>::ComponentPool()
+    {
+    }
+
+    template <typename ComponentType>
+    ComponentType& ComponentPool<ComponentType>::add_component_to_entity(const Entity& entity, ComponentType&& component)
     {
         _components.emplace_back(std::move(component));
+        _entity_to_component[&entity] = &_components.back();
         return _components.back();
     }
 
     template <typename ComponentType>
-    ComponentType* ComponentPool<ComponentType>::find_for_entity(const Entity& entity)
+    ComponentType* ComponentPool<ComponentType>::find_component_for_entity(const Entity& entity)
     {
+        ComponentType* component = nullptr;
+        auto it = _entity_to_component.find(&entity);
+        if (it != _entity_to_component.end())
+        {
+            component = it->second;
+        }
+        return component;
     }
 
     template <typename ComponentType>
-    const ComponentType* ComponentPool<ComponentType>::find_for_entity(const Entity& entity) const
+    const ComponentType* ComponentPool<ComponentType>::find_component_for_entity(const Entity& entity) const
     {
+        const ComponentType* component = nullptr;
+        auto it = _entity_to_component.find(&entity);
+        if (it != _entity_to_component.end())
+        {
+            component = it->second;
+        }
+        return component;
     }
 }

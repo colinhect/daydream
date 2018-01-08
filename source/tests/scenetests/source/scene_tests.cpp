@@ -25,7 +25,38 @@
 
 #include <catch.hpp>
 
-TEST_CASE("Do something")
+class TestComponent :
+    public scene::Component<TestComponent>
 {
+public:
+    int value = 0;
+};
+
+class TestEntity :
+    public scene::Entity
+{
+public:
+    TestEntity(scene::Scene& scene) :
+        Entity(scene),
+        _test_component(add_component<TestComponent>())
+    {
+        _test_component.value = 12;
+    }
+
+    TestComponent& test_component()
+    {
+        return _test_component;
+    }
+
+private:
+    TestComponent& _test_component;
+};
+
+TEST_CASE("Create a test entity with a test component")
+{
+    scene::Scene scene;
+    auto entity = scene.create_entity<TestEntity>();
+    REQUIRE(entity->test_component().value == 12);
+    REQUIRE(entity->get_component<TestComponent>().value == 12);
 }
 

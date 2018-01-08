@@ -2,7 +2,6 @@ project(scenetests CXX)
 
 set(SOURCE_FILES
     source/main.cpp
-    source/component_pool_tests.cpp
     source/scene_tests.cpp
     )
 

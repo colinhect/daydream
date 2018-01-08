@@ -30,6 +30,7 @@ class TestComponent :
 {
 public:
     int value = 0;
+
 };
 
 class TestEntity :
@@ -38,25 +39,20 @@ class TestEntity :
 public:
     TestEntity(scene::Scene& scene) :
         Entity(scene),
-        _test_component(add_component<TestComponent>())
+        test_component(add_component<TestComponent>())
     {
-        _test_component.value = 12;
+        test_component.value = 12;
     }
 
-    TestComponent& test_component()
-    {
-        return _test_component;
-    }
-
-private:
-    TestComponent& _test_component;
+    TestComponent& test_component;
 };
 
 TEST_CASE("Create a test entity with a test component")
 {
     scene::Scene scene;
     auto entity = scene.create_entity<TestEntity>();
-    REQUIRE(entity->test_component().value == 12);
+    REQUIRE(entity->test_component.value == 12);
     REQUIRE(entity->get_component<TestComponent>().value == 12);
+    REQUIRE(&entity->test_component== &entity->get_component<TestComponent>());
 }
 

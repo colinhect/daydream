@@ -27,8 +27,8 @@
 #include <vector>
 #include <typeindex>
 #include <typeinfo>
-#include "export.h"
 
+#include "export.h"
 #include "entity.hpp"
 #include "component_pool.hpp"
 

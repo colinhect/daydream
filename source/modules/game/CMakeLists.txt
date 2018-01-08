@@ -17,6 +17,7 @@ else()
 endif()
 
 target_link_libraries(game PRIVATE
+	scene
     )
 
 if(MSVC)

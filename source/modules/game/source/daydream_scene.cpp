@@ -1,3 +1,4 @@
+
 ///////////////////////////////////////////////////////////////////////////////
 // This source file is part of Daydream.
 //
@@ -21,39 +22,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
-#pragma once
-#include <map>
-#include <memory>
-#include <vector>
-#include <typeindex>
-#include <typeinfo>
+#include "game/daydream_scene.hpp"
 
-#include "export.h"
-#include "entity.hpp"
-#include "component_pool.hpp"
-
-namespace scene
+namespace game
 {
-    class SCENE_EXPORT Scene
+    DaydreamScene::DaydreamScene(unsigned width, unsigned height)
     {
-    public:
 
-        ///
-        /// Creates an 
-        template <typename EntityType, typename... Args>
-        std::weak_ptr<EntityType> create_entity(Args&&... args);
-
-        template <typename ComponentType>
-        ComponentPool<ComponentType>& get_components();
-
-        template <typename ComponentType>
-        const ComponentPool<ComponentType>& get_components() const;
-
-    private:
-        std::vector<std::shared_ptr<Entity>> _entities;
-        mutable std::map<std::type_index, std::shared_ptr<ComponentPoolBase>> _component_pools;
-    };
+    }
 }
-
-#include "entity.inl"
-#include "scene.inl"

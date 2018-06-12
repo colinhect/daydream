@@ -2,7 +2,9 @@ project(game CXX)
 
 set(SOURCE_FILES
     include/game/game.hpp
+    include/game/daydream_scene.hpp
     source/game.cpp
+    source/daydream_scene.cpp
     )
 
 add_library(game SHARED ${SOURCE_FILES})

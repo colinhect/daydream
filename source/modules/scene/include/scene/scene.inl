@@ -24,7 +24,7 @@
 namespace scene
 {
     template <typename EntityType, typename... Args>
-    std::shared_ptr<EntityType> Scene::create_entity(Args&&... args)
+    std::weak_ptr<EntityType> Scene::create_entity(Args&&... args)
     {
         auto entity = std::make_shared<EntityType>(*this, args...);
         _entities.emplace_back(entity);

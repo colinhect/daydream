@@ -22,38 +22,17 @@
 // IN THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
-#include <map>
-#include <memory>
-#include <vector>
-#include <typeindex>
-#include <typeinfo>
-
 #include "export.h"
-#include "entity.hpp"
-#include "component_pool.hpp"
+#include <scene/scene.hpp>
 
-namespace scene
+namespace game
 {
-    class SCENE_EXPORT Scene
+    class GAME_EXPORT DaydreamScene :
+        public scene::Scene
     {
     public:
-
-        ///
-        /// Creates an 
-        template <typename EntityType, typename... Args>
-        std::weak_ptr<EntityType> create_entity(Args&&... args);
-
-        template <typename ComponentType>
-        ComponentPool<ComponentType>& get_components();
-
-        template <typename ComponentType>
-        const ComponentPool<ComponentType>& get_components() const;
+        DaydreamScene(unsigned width, unsigned height);
 
     private:
-        std::vector<std::shared_ptr<Entity>> _entities;
-        mutable std::map<std::type_index, std::shared_ptr<ComponentPoolBase>> _component_pools;
     };
 }
-
-#include "entity.inl"
-#include "scene.inl"

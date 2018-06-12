@@ -21,39 +21,11 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
-#pragma once
-#include <map>
-#include <memory>
-#include <vector>
-#include <typeindex>
-#include <typeinfo>
+#include <game/daydream_scene.hpp>
 
-#include "export.h"
-#include "entity.hpp"
-#include "component_pool.hpp"
+#include <catch.hpp>
 
-namespace scene
+TEST_CASE("Do something")
 {
-    class SCENE_EXPORT Scene
-    {
-    public:
-
-        ///
-        /// Creates an 
-        template <typename EntityType, typename... Args>
-        std::weak_ptr<EntityType> create_entity(Args&&... args);
-
-        template <typename ComponentType>
-        ComponentPool<ComponentType>& get_components();
-
-        template <typename ComponentType>
-        const ComponentPool<ComponentType>& get_components() const;
-
-    private:
-        std::vector<std::shared_ptr<Entity>> _entities;
-        mutable std::map<std::type_index, std::shared_ptr<ComponentPoolBase>> _component_pools;
-    };
+    game::DaydreamScene scene(100, 100);
 }
-
-#include "entity.inl"
-#include "scene.inl"
